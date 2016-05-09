@@ -9,27 +9,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
-import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends RxFragment {
+public class MainActivityFragment extends BaseFragment {
 
+	// constants
 	private static final String TAG = "MainActivityFragment";
 
+	// rx
 	//private Subscription _subscription;
 
 	// views
 	private Unbinder _unbinder;
+
 	@BindView(R.id.tv_hello)
 	TextView tv_hello;
 
