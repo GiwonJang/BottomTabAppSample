@@ -1,7 +1,6 @@
 package io.handicraft.bottomtabappsample;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,30 +8,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import rx.Observable;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends BaseFragment {
+public class DetailFragment extends BaseFragment {
 
 	// constants
-	private static final String TAG = "MainActivityFragment";
+	private static final String TAG = "DetailFragment";
 
 	// rx
 	//private Subscription _subscription;
 
 	// views
-	private Unbinder _unbinder;
-
 	@BindView(R.id.tv_hello)
 	TextView tv_hello;
 
-	public MainActivityFragment() {
+	public static DetailFragment newInstance() {
+		//Bundle args = new Bundle();
+		//args.putInt(ARGS_INSTANCE, instance);
+		DetailFragment fragment = new DetailFragment();
+		//fragment.setArguments(args);
+		return fragment;
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class MainActivityFragment extends BaseFragment {
 		});*/
 
 		Observable
-				.just("Hello RxAndroid!!")
+				.just("Detail Fragment")
 				.compose(this.<String>bindToLifecycle())
 				.filter(s -> !s.isEmpty())
 				.map(String::toUpperCase)
@@ -83,11 +85,10 @@ public class MainActivityFragment extends BaseFragment {
 
 		RxView.clicks(tv_hello)
 				.subscribe(value -> {
-					Toast.makeText(MainActivityFragment.this.getActivity(), value.toString(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(DetailFragment.this.getActivity(), value.toString(), Toast.LENGTH_SHORT).show();
 				}, throwable -> {
-					Log.e(TAG, "onCreateView: " + throwable.getMessage(), throwable);
+					Logger.e(throwable, throwable.getMessage());
 				});
-
 
 		return view;
 	}
@@ -98,6 +99,5 @@ public class MainActivityFragment extends BaseFragment {
 		//_subscription.unsubscribe();
 
 		super.onDestroyView();
-		_unbinder.unbind();
 	}
 }

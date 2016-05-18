@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="io.handicraft.bottomtabappsample.MainActivity">
+	<item
+		android:id="@+id/bb_menu_today"
+		android:icon="@drawable/ic_today_white"
+		android:title="Today" />
+	<item
+		android:id="@+id/bb_menu_older"
+		android:icon="@drawable/ic_older_white"
+		android:title="Older" />
+	<item
+		android:id="@+id/bb_menu_settings"
+		android:icon="@drawable/ic_settings_white"
+		android:title="Settings" />
+</menu>
