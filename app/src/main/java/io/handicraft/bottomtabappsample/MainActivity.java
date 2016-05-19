@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,12 +14,14 @@ import android.view.MenuItem;
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends RxAppCompatActivity implements BaseFragment.FragmentNavigation {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation {//RxAppCompatActivity implements BaseFragment.FragmentNavigation {
 	private BottomBar         mBottomBar;
 	private FragNavController mNavController;
 
@@ -27,12 +29,22 @@ public class MainActivity extends RxAppCompatActivity implements BaseFragment.Fr
 	private final int BOTTOM_TAB_INDEX_OLDER    = FragNavController.TAB2;
 	private final int BOTTOM_TAB_INDEX_SETTINGS = FragNavController.TAB3;
 
+	// views
+	@BindView(R.id.toolbar)
+	Toolbar           _toolbar;
+	@BindView(R.id.myCoordinatorLayout)
+	CoordinatorLayout _myCoordinatorLayout;
+	@BindView(R.id.myScrollingContent)
+	NestedScrollView  _myScrollingContent;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+
+		ButterKnife.bind(this);
+
+		setSupportActionBar(_toolbar);
 
 		List<Fragment> fragments = new ArrayList<>(5);
 
@@ -44,8 +56,7 @@ public class MainActivity extends RxAppCompatActivity implements BaseFragment.Fr
 				new FragNavController(savedInstanceState, getSupportFragmentManager(), R.id.container, fragments);
 
 		//mBottomBar = BottomBar.attach(this, savedInstanceState);
-		mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.myCoordinatorLayout),
-				findViewById(R.id.myScrollingContent), savedInstanceState);
+		mBottomBar = BottomBar.attachShy(_myCoordinatorLayout, _myScrollingContent, savedInstanceState);
 		// Disable the left bar on tablets and behave exactly the same on mobile and tablets instead.
 		//mBottomBar.noTabletGoodness();
 
@@ -90,6 +101,11 @@ public class MainActivity extends RxAppCompatActivity implements BaseFragment.Fr
 			}
 		});
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override
